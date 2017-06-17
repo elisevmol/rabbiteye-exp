@@ -4,7 +4,11 @@ Feature reduction is implemented to reduce running time and storage size for Que
 
 The X and Y for training are constructed in the same method as the previous blog update. In this manner 26314 features are included in the Train and Validation set. To reduce the amount of features the SelectPercentile package from Sklearn is implemented on 10, 20, 30, 40, 50 60, 70, 80, 90 and 100. That results in the following graph. 
 
+![](feature_reduction.png)
+
 Because the accuracy falls from 64 to 63 in the jump from 70 to 80 this range is split in steps of 1, which results in the following graph. 
+
+![](feature_reduction_zoomed_in.png)
 
 The values corresponding to these graphs are the following:
 
