@@ -34,7 +34,10 @@ Accuracy Linear SVC 90: 0.64 (+/- 0.03)
 Accuracy Linear SVC 100: 0.64 (+/- 0.03)
 ```
 
-Because 76 percent of the features results in the lowest number of features corresponding to no decrease in accuracy a gridsearch on the C parameter is run with this subset of the data. This results in an optimal value of 0.1, with a corresponding accuracy of 65 percent.  
+SelectPercentile computes the ANOVA F-value for the provided sample, and for a better understanding of this method [Understanding Analysis of Variance (ANOVA) and the F-test](http://blog.minitab.com/blog/adventures-in-statistics-2/understanding-analysis-of-variance-anova-and-the-f-test) is a good resource. Another score function was implemented as well, [chi2](http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.chi2.html#sklearn.feature_selection.chi2), but resulted in the same accuracy scores. This might vary from dataset to dataset and I recommend trying both. 
+
+
+Because 76 percent of the features results in the lowest number of features corresponding to no decrease in accuracy a gridsearch on the C parameter is run with this subset of the data. This results in an optimal value of 0.1, with a corresponding accuracy of 65 percent. The previous C value is 1.0, the default C value.   
 
 ```
 0.47 (+/-0.026) for {'C': 0.001}
@@ -45,7 +48,7 @@ Because 76 percent of the features results in the lowest number of features corr
 0.53 (+/-0.029) for {'C': 100}
 ```
 
-These values are then checked with the validation set with an implemented 'bubble', which is described in the previous blog update. This is done by transforming the validation set to the selected features with the following code. 
+These values are then checked with the validation set with an implemented 'bubble', which is described in the previous blog update. This bubble entails that all product nuts that have the same category are kept together in cross validation to avoid overfitting. Preforming the calculations on the validation set is done by transforming the validation set to only contain the selected features with the following code. 
 
 ```
 selector = SelectPercentile(percentile=76)
@@ -61,4 +64,6 @@ macro recall score:  0.600547619048
 ```
 
 Furthermore some bugs were removed, such as the stopword removal after the addition of tags, which was solved by removing the tags all together. Also the stopwords were enriched with more standard Dutch stopwords. 
+
+In conclusion the amount of features can be reduced to 76 percent of the original amount of features to keep the accuracy at 64 percent in the train set. In the validation set this results in a macro recall score of 60 percent. 
 
